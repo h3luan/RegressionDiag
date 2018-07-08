@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://rcompanion.org/handbook/I_12.html -->
+<html lang="en" class="gr__rcompanion_org"><!-- #BeginTemplate "master.dwt" --><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style id="stndz-style"></style>
+
+<!-- #BeginEditable "doctitle" -->
+<title>R Handbook: Transforming Data</title>
+<meta name="description" content="Clear examples in R. Transforming data; Log transformation; Tukey’s Ladder of Powers; Box–Cox transformation">
+<!-- #EndEditable -->
+<link rel="stylesheet" href="./R Handbook_ Transforming Data_files/style.css" type="text/css">
+
+	<!-- ****** faviconit.com favicons ****** -->
+	<link rel="shortcut icon" href="http://rcompanion.org/favicon.ico" type="image/x-icon">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="http://rcompanion.org/favicon.ico">
+	<link rel="icon" type="image/png" sizes="196x196" href="http://rcompanion.org/handbook/fav/favicon-192.png">
+	<link rel="icon" type="image/png" sizes="160x160" href="http://rcompanion.org/handbook/fav/favicon-160.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="http://rcompanion.org/handbook/fav/favicon-96.png">
+	<link rel="icon" type="image/png" sizes="64x64" href="http://rcompanion.org/handbook/fav/favicon-64.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="http://rcompanion.org/handbook/fav/favicon-32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="http://rcompanion.org/handbook/fav/favicon-16.png">
+	<link rel="apple-touch-icon" href="http://rcompanion.org/handbook/fav/favicon-57.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="http://rcompanion.org/handbook/fav/favicon-114.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="http://rcompanion.org/handbook/fav/favicon-72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="http://rcompanion.org/handbook/fav/favicon-144.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="http://rcompanion.org/handbook/fav/favicon-60.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="http://rcompanion.org/handbook/fav/favicon-120.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="http://rcompanion.org/handbook/fav/favicon-76.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="http://rcompanion.org/handbook/fav/favicon-152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="http://rcompanion.org/handbook/fav/favicon-180.png">
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="msapplication-TileImage" content="fav/favicon-144.png">
+	<meta name="msapplication-config" content="fav/browserconfig.xml">
+	<!-- ****** faviconit.com favicons ****** -->
+<script async="" src="./R Handbook_ Transforming Data_files/async-ads.js.download"></script><script src="./R Handbook_ Transforming Data_files/jsapi" type="text/javascript"></script><link type="text/css" href="./R Handbook_ Transforming Data_files/default+en.css" rel="stylesheet"><link type="text/css" href="./R Handbook_ Transforming Data_files/default.css" rel="stylesheet"><script type="text/javascript" src="./R Handbook_ Transforming Data_files/default+en.I.js.download"></script><style type="text/css">.gsc-control-cse{font-family:Arial, sans-serif;border-color:#E6E6E6;background-color:#E6E6E6}.gsc-control-cse .gsc-table-result{font-family:Arial, sans-serif}input.gsc-input,.gsc-input-box,.gsc-input-box-hover,.gsc-input-box-focus{border-color:#D9D9D9}.gsc-search-button-v2,.gsc-search-button-v2:hover,.gsc-search-button-v2:focus{border-color:#666666;background-color:#CECECE;background-image:none;filter:none}.gsc-search-button-v2 svg{fill:#FFFFFF}.gsc-tabHeader.gsc-tabhInactive{border-color:#E9E9E9;background-color:#E9E9E9}.gsc-tabHeader.gsc-tabhActive{border-color:#FF9900;border-bottom-color:#FFFFFF;background-color:#FFFFFF}.gsc-tabsArea{border-color:#FF9900}.gsc-webResult.gsc-result,.gsc-results .gsc-imageResult{border-color:#FFFFFF;background-color:#FFFFFF}.gsc-webResult.gsc-result:hover,.gsc-imageResult:hover{border-color:#FFFFFF;background-color:#FFFFFF}.gs-webResult.gs-result a.gs-title:link,.gs-webResult.gs-result a.gs-title:link b,.gs-imageResult a.gs-title:link,.gs-imageResult a.gs-title:link b{color:#0000CC}.gs-webResult.gs-result a.gs-title:visited,.gs-webResult.gs-result a.gs-title:visited b,.gs-imageResult a.gs-title:visited,.gs-imageResult a.gs-title:visited b{color:#0000CC}.gs-webResult.gs-result a.gs-title:hover,.gs-webResult.gs-result a.gs-title:hover b,.gs-imageResult a.gs-title:hover,.gs-imageResult a.gs-title:hover b{color:#0000CC}.gs-webResult.gs-result a.gs-title:active,.gs-webResult.gs-result a.gs-title:active b,.gs-imageResult a.gs-title:active,.gs-imageResult a.gs-title:active b{color:#0000CC}.gsc-cursor-page{color:#0000CC}a.gsc-trailing-more-results:link{color:#0000CC}.gs-webResult .gs-snippet,.gs-imageResult .gs-snippet,.gs-fileFormatType{color:#000000}.gs-webResult div.gs-visibleUrl,.gs-imageResult div.gs-visibleUrl{color:#008000}.gs-webResult div.gs-visibleUrl-short{color:#008000}.gs-webResult div.gs-visibleUrl-short{display:none}.gs-webResult div.gs-visibleUrl-long{display:block}.gs-promotion div.gs-visibleUrl-short{display:none}.gs-promotion div.gs-visibleUrl-long{display:block}.gsc-cursor-box{border-color:#FFFFFF}.gsc-results .gsc-cursor-box .gsc-cursor-page{border-color:#E9E9E9;background-color:#FFFFFF;color:#0000CC}.gsc-results .gsc-cursor-box .gsc-cursor-current-page{border-color:#FF9900;background-color:#FFFFFF;color:#0000CC}.gsc-webResult.gsc-result.gsc-promotion{border-color:#336699;background-color:#FFFFFF}.gsc-completion-title{color:#0000CC}.gsc-completion-snippet{color:#000000}.gs-promotion a.gs-title:link,.gs-promotion a.gs-title:link *,.gs-promotion .gs-snippet a:link{color:#0000CC}.gs-promotion a.gs-title:visited,.gs-promotion a.gs-title:visited *,.gs-promotion .gs-snippet a:visited{color:#0000CC}.gs-promotion a.gs-title:hover,.gs-promotion a.gs-title:hover *,.gs-promotion .gs-snippet a:hover{color:#0000CC}.gs-promotion a.gs-title:active,.gs-promotion a.gs-title:active *,.gs-promotion .gs-snippet a:active{color:#0000CC}.gs-promotion .gs-snippet,.gs-promotion .gs-title .gs-promotion-title-right,.gs-promotion .gs-title .gs-promotion-title-right *{color:#000000}.gs-promotion .gs-visibleUrl,.gs-promotion .gs-visibleUrl-short{color:#008000}</style><style type="text/css">.gscb_a{display:inline-block;font:27px/13px arial,sans-serif}.gsst_a .gscb_a{color:#a1b9ed;cursor:pointer}.gsst_a:hover .gscb_a,.gsst_a:focus .gscb_a{color:#36c}.gsst_a{display:inline-block}.gsst_a{cursor:pointer;padding:0 4px}.gsst_a:hover{text-decoration:none!important}.gsst_b{font-size:16px;padding:0 2px;position:relative;user-select:none;-webkit-user-select:none;white-space:nowrap}.gsst_e{opacity:0.55;}.gsst_a:hover .gsst_e,.gsst_a:focus .gsst_e{opacity:0.72;}.gsst_a:active .gsst_e{opacity:1;}.gsst_f{background:white;text-align:left}.gsst_g{background-color:white;border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);margin:-1px -3px;padding:0 6px}.gsst_h{background-color:white;height:1px;margin-bottom:-1px;position:relative;top:-1px}.gsib_a{width:100%;padding:4px 6px 0}.gsib_a,.gsib_b{vertical-align:top}.gssb_c{border:0;position:absolute;z-index:989}.gssb_e{border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:default}.gssb_f{visibility:hidden;white-space:nowrap}.gssb_k{border:0;display:block;position:absolute;top:0;z-index:988}.gsdd_a{border:none!important}.gsq_a{padding:0}.gsq_a{padding:0}.gscsep_a{display:none}.gssb_a{padding:0 7px}.gssb_a,.gssb_a td{white-space:nowrap;overflow:hidden;line-height:22px}#gssb_b{font-size:11px;color:#36c;text-decoration:none}#gssb_b:hover{font-size:11px;color:#36c;text-decoration:underline}.gssb_g{text-align:center;padding:8px 0 7px;position:relative}.gssb_h{font-size:15px;height:28px;margin:0.2em;-webkit-appearance:button}.gssb_i{background:#eee}.gss_ifl{visibility:hidden;padding-left:5px}.gssb_i .gss_ifl{visibility:visible}a.gssb_j{font-size:13px;color:#36c;text-decoration:none;line-height:100%}a.gssb_j:hover{text-decoration:underline}.gssb_l{height:1px;background-color:#e5e5e5}.gssb_m{color:#000;background:#fff}.gsfe_a{border:1px solid #b9b9b9;border-top-color:#a0a0a0;box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);-moz-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);-webkit-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.1);}.gsfe_b{border:1px solid #4d90fe;outline:none;box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);-moz-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);-webkit-box-shadow:inset 0px 1px 2px rgba(0,0,0,0.3);}.gssb_a{padding:0 9px}.gsib_a{padding-right:8px;padding-left:8px}.gsst_a{padding-top:5.5px}.gssb_e{border:0}.gssb_l{margin:5px 0}input.gsc-input::-webkit-input-placeholder{font-size:14px}input.gsc-input:-moz-placeholder{font-size:14px}input.gsc-input::-moz-placeholder{font-size:14px}input.gsc-input:-ms-input-placeholder{font-size:14px}input.gsc-input:focus::-webkit-input-placeholder{color:transparent}input.gsc-input:focus:-moz-placeholder{color:transparent}input.gsc-input:focus::-moz-placeholder{color:transparent}input.gsc-input:focus:-ms-input-placeholder{color:transparent}.gssb_c .gsc-completion-container{position:static}.gssb_c{z-index:5000}.gsc-completion-container table{background:transparent;font-size:inherit;font-family:inherit}.gssb_c > tbody > tr,.gssb_c > tbody > tr > td,.gssb_d,.gssb_d > tbody > tr,.gssb_d > tbody > tr > td,.gssb_e,.gssb_e > tbody > tr,.gssb_e > tbody > tr > td{padding:0;margin:0;border:0}.gssb_a table,.gssb_a table tr,.gssb_a table tr td{padding:0;margin:0;border:0}</style></head>
+
+<body data-gr-c-s-loaded="true">
+
+<!-- Begin Container -->
+<div id="container">
+	<!-- Begin Masthead -->
+	<div id="masthead">
+	<img src="./R Handbook_ Transforming Data_files/banner.jpg" width="100%" height="auto" alt="[banner]" title="Cohansey River, Fairfield, New Jersey">
+    <div id="mastword">
+		<h2>Summary and Analysis of Extension Program Evaluation in R</h2>
+		<p class="name">Salvatore S. Mangiafico</p>
+	</div>	
+	</div>
+	<!-- End Masthead -->
+	<!-- Begin Navigation -->
+	<div id="leftside">
+    <div id="searchbox">
+	      <script type="text/javascript" async="" src="./R Handbook_ Transforming Data_files/f.txt"></script><script>
+          (function() {
+           var cx = '011924377584128958307:c7spl36l-6m';
+           var gcse = document.createElement('script');
+           gcse.type = 'text/javascript';
+           gcse.async = true;
+           gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+           '//www.google.com/cse/cse.js?cx=' + cx;
+           var s = document.getElementsByTagName('script')[0];
+           s.parentNode.insertBefore(gcse, s);
+           })();
+          </script>
+          <div id="___gcse_0"><div class="gsc-control-cse gsc-control-cse-en"><div class="gsc-control-wrapper-cse" dir="ltr"><form class="gsc-search-box gsc-search-box-tools" accept-charset="utf-8"><table cellspacing="0" cellpadding="0" class="gsc-search-box"><tbody><tr><td class="gsc-input"><div class="gsc-input-box" id="gsc-iw-id1"><table cellspacing="0" cellpadding="0" id="gs_id50" class="gstl_50 " style="width: 100%; padding: 0px;"><tbody><tr><td id="gs_tti50" class="gsib_a"><input autocomplete="off" type="text" size="10" class="gsc-input" name="search" title="search" id="gsc-i-id1" x-webkit-speech="" x-webkit-grammar="builtin:search" lang="en" dir="ltr" spellcheck="false" placeholder="Custom Search" style="width: 100%; padding: 0px; border: none; margin: 0px; height: auto; outline: none; background: url(&quot;http://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png&quot;) left center no-repeat rgb(255, 255, 255); text-indent: 48px;"></td><td class="gsib_b"><div class="gsst_b" id="gs_st50" dir="ltr"><a class="gsst_a" href="javascript:void(0)" style="display: none;"><span class="gscb_a" id="gs_cb50">×</span></a></div></td></tr></tbody></table></div></td><td class="gsc-search-button"><button class="gsc-search-button gsc-search-button-v2"><svg width="13" height="13" viewBox="0 0 13 13"><title>search</title><path d="m4.8495 7.8226c0.82666 0 1.5262-0.29146 2.0985-0.87438 0.57232-0.58292 0.86378-1.2877 0.87438-2.1144 0.010599-0.82666-0.28086-1.5262-0.87438-2.0985-0.59352-0.57232-1.293-0.86378-2.0985-0.87438-0.8055-0.010599-1.5103 0.28086-2.1144 0.87438-0.60414 0.59352-0.8956 1.293-0.87438 2.0985 0.021197 0.8055 0.31266 1.5103 0.87438 2.1144 0.56172 0.60414 1.2665 0.8956 2.1144 0.87438zm4.4695 0.2115 3.681 3.6819-1.259 1.284-3.6817-3.7 0.0019784-0.69479-0.090043-0.098846c-0.87973 0.76087-1.92 1.1413-3.1207 1.1413-1.3553 0-2.5025-0.46363-3.4417-1.3909s-1.4088-2.0686-1.4088-3.4239c0-1.3553 0.4696-2.4966 1.4088-3.4239 0.9392-0.92727 2.0864-1.3969 3.4417-1.4088 1.3553-0.011889 2.4906 0.45771 3.406 1.4088 0.9154 0.95107 1.379 2.0924 1.3909 3.4239 0 1.2126-0.38043 2.2588-1.1413 3.1385l0.098834 0.090049z"></path></svg></button></td><td class="gsc-clear-button"><div class="gsc-clear-button" title="clear results">&nbsp;</div></td></tr></tbody></table></form><div class="gsc-results-wrapper-overlay"><div class="gsc-results-close-btn" tabindex="0"></div><div class="gsc-tabsAreaInvisible"><div class="gsc-tabHeader gsc-inline-block gsc-tabhActive">Custom Search</div><span class="gs-spacer"> </span></div><div class="gsc-tabsAreaInvisible"></div><div class="gsc-above-wrapper-area-invisible"><table cellspacing="0" cellpadding="0" class="gsc-above-wrapper-area-container"><tbody><tr><td class="gsc-result-info-container"><div class="gsc-result-info-invisible"></div></td><td class="gsc-orderby-container"><div class="gsc-orderby-invisible"><div class="gsc-orderby-label gsc-inline-block">Sort by:</div><div class="gsc-option-menu-container gsc-inline-block"><div class="gsc-selected-option-container gsc-inline-block"><div class="gsc-selected-option">Relevance</div><div class="gsc-option-selector"></div></div><div class="gsc-option-menu-invisible"><div class="gsc-option-menu-item gsc-option-menu-item-highlighted"><div class="gsc-option">Relevance</div></div><div class="gsc-option-menu-item"><div class="gsc-option">Date</div></div></div></div></div></td></tr></tbody></table></div><div class="gsc-adBlockInvisible"></div><div class="gsc-wrapper"><div class="gsc-adBlockInvisible"></div><div class="gsc-resultsbox-invisible"><div class="gsc-resultsRoot gsc-tabData gsc-tabdActive"><table cellspacing="0" cellpadding="0" class="gsc-resultsHeader"><tbody><tr><td class="gsc-twiddleRegionCell"><div class="gsc-twiddle"><div class="gsc-title">Web</div></div><div class="gsc-stats"></div><div class="gsc-results-selector gsc-all-results-active"><div class="gsc-result-selector gsc-one-result" title="show one result">&nbsp;</div><div class="gsc-result-selector gsc-more-results" title="show more results">&nbsp;</div><div class="gsc-result-selector gsc-all-results" title="show all results">&nbsp;</div></div></td><td class="gsc-configLabelCell"></td></tr></tbody></table><div><div class="gsc-expansionArea"></div></div></div></div></div></div><div class="gsc-modal-background-image" tabindex="0"></div></div></div></div>
+          <p class="notes">Search Rcompanion.org</p>                 
+	   </div>
+
+	<div id="navigation">
+	<p class="light">&nbsp;</p>
+	<p class="title">Contents</p>
+	<p class="light">&nbsp;</p>
+		<ul>Introduction
+		    <li><a href="http://rcompanion.org/handbook/index.html" title="Purpose of this book; Specific learning goals; Pre-requisites; What this book will not cover">
+		         Purpose of this Book</a></li>
+			<li><a href="http://rcompanion.org/handbook/A_02.html" title="About the Author of this Book">
+			     Author of this Book</a> and Version Notes</li>
+			<li><a href="http://rcompanion.org/handbook/A_03.html" title="Using R; RStudio; R; Help with R; R Tutorials; Exercises A">
+			     Using R</a></li>
+			<li><a href="http://rcompanion.org/handbook/A_04.html" title="Textbooks; Free statistics books; Online resources; Online Learning Modules and Massive Open Online Courses (MOOC’s)">
+			     Statistics Textbooks and Other Resources</a></li>
+		</ul>
+		<p class="light">&nbsp;</p>
+		<ul>Statistics for Educational Program Evaluation
+		    <li><a href="http://rcompanion.org/handbook/B_01.html" title="The importance of statistics in program evaluation">
+		         Why Statistics?</a></li>
+			<li><a href="http://rcompanion.org/handbook/B_02.html" title="Evaluation tools and surveys; Extension programs; Designing a questionnaire; Examples of evaluation tools">
+			     Evaluation Tools and Surveys</a></li>
+		</ul>
+		<p class="light">&nbsp;</p>
+		<ul>Variables, Descriptive Statistics, and Plots
+			<li><a href="http://rcompanion.org/handbook/C_01.html" title="Types of variables; Observations and variables; Long-format and wide-format data; Types of variables; Nominal data; Ordinal data; Interval/ratio data; Exercises B">
+		         Types of Variables</a></li>
+			<li><a href="http://rcompanion.org/handbook/C_02.html" title="Descriptive statistics; Mean; Median; Standard error; Quantiles; Percentile; Skew; Kurtosis; Dealing with missing values; Robust estimators; Grouped data; One-way data; Multi-way data; Geometric mean; Harmonic mean; Exercises C">
+			     Descriptive Statistics</a></li>
+			<li><a href="http://rcompanion.org/handbook/C_03.html" title="Confidence intervals for means; Confidence intervals by bootstrap; Exercises D">
+			     Confidence Intervals</a></li>
+			<li><a href="http://rcompanion.org/handbook/C_04.html" title="Histogram; Box plots; Interaction plots; Bar plot; Scatter plot; Mosaic plot;  Histogram shapes; Misleading plots; Exercises E">
+			     Basic Plots</a></li>
+		 </ul>
+		 <p class="light">&nbsp;</p>
+         <ul>Understanding Statistics and Hypothesis Testing
+		    <li><a href="http://rcompanion.org/handbook/D_01.html" title="Hypothesis testing; p-values; Statistical inference; Null hypothesis; Causation; The NHST controversy; Exercises F">
+		         Hypothesis Testing and p-values</a></li>
+			<li><a href="http://rcompanion.org/handbook/D_02.html" title="Reporting results of data, analyses, tables, plots">
+			     Reporting Results of Data and Analyses</a></li>
+			<li><a href="http://rcompanion.org/handbook/D_03.html" title="Choosing a statistical test">
+			     Choosing a Statistical Test</a></li>			     
+			<li><a href="http://rcompanion.org/handbook/D_04.html" title="Paired, unpaired, and independent data">
+			    Independent and Paired Values</a></li>
+		</ul>
+		 <p class="light">&nbsp;</p>
+         <ul>Likert Data
+		    <li><a href="http://rcompanion.org/handbook/E_01.html" title="Likert data; Symmetry; Neutral responses; Opt-out answers; Examples of Likert item responses; Likert data should be treated ordinal data">
+		         Introduction to Likert Data</a></li>
+			<li><a href="http://rcompanion.org/handbook/E_02.html" title="Descriptive statistics for Likert data; Median; Quartiles; Percentiles; Bar plot; Interaction plot; Grouped data; One-way data; Multi-way data; Opt-out responses">
+			     Descriptive Statistics for Likert Data</a></li>
+			<li><a href="http://rcompanion.org/handbook/E_03.html" title="Summary statistics and plots with the likert package">
+			     Descriptive Statistics with the likert Package</a></li>
+			<li><a href="http://rcompanion.org/handbook/E_04.html" title="Confidence intervals for medians; Confidence intervals by bootstrap">
+			     Confidence Intervals for Medians</a></li>
+			<li><a href="http://rcompanion.org/handbook/E_05.html" title="Categorizing data; Percentiles; Clustering, PAM, Medoids">
+			     Converting Numeric Data to Categories</a></li>
+
+		</ul>
+		 <p class="light">&nbsp;</p>
+         <ul>Traditional Nonparametric Tests
+		    <li><a href="http://rcompanion.org/handbook/F_01.html" title="Nonparametric test assumptions, advantages, interpretation, ordinal data">
+		        Introduction to Traditional Nonparametric Tests</a></li>
+		    <li><a href="http://rcompanion.org/handbook/F_02.html" title="One-sample Wilcoxon Signed-rank Test; Exercises I">
+		        One-sample Wilcoxon Signed-rank Test</a></li> 
+		    <li><a href="http://rcompanion.org/handbook/F_03.html" title="Sign Test for One-sample Data">
+		        Sign Test for One-sample Data</a></li> 
+		    <li><a href="http://rcompanion.org/handbook/F_04.html" title="Two-sample Mann–Whitney U Test; Exercises J">
+		        Two-sample Mann–Whitney U Test</a></li> 
+		    <li><a href="http://rcompanion.org/handbook/F_05.html" title="Mood’s Median Test for Two-sample Data">
+		        Mood’s Median Test for Two-sample Data</a></li> 
+		     <li><a href="http://rcompanion.org/handbook/F_06.html" title="Two-sample Paired Signed-rank Test; Exercises K">
+		        Two-sample Paired Signed-rank Test</a></li>
+		     <li><a href="http://rcompanion.org/handbook/F_07.html" title="Sign Test for Two-sample Paired Data">
+		        Sign Test for Two-sample Paired Data</a></li>
+		     <li><a href="http://rcompanion.org/handbook/F_08.html" title="Kruskal–Wallis test; Histograms by group; Post-hoc test; Multiple comparisons; Dunn test; Exercises L">
+		        Kruskal–Wallis Test</a></li>
+			  <li><a href="http://rcompanion.org/handbook/F_09.html" title="Mood’s median test; Post-hoc test; Multiple comparisons">
+		        Mood’s Median Test</a></li>
+		      <li><a href="http://rcompanion.org/handbook/F_10.html" title="Friedman test; Post-hoc test; Conover test; Multiple comparisons">
+		        Friedman Test</a></li>
+		      <li><a href="http://rcompanion.org/handbook/F_11.html" title="Quade test; Post-hoc test; Multiple comparisons">
+		        Quade Test</a></li>
+		       <li><a href="http://rcompanion.org/handbook/F_14.html" title="Scheirer Ray Hare test; Post-hoc test; Multiple comparisons">
+		        Scheirer–Ray–Hare Test</a></li>
+		      <li><a href="http://rcompanion.org/handbook/F_12.html" title="Nonparametric regression; Kendall–Theil; Theil Sen; Siegel; Quantile regression; Local regression; Generalized additive models">
+		        Nonparametric Regression</a></li>
+		      <li><a href="http://rcompanion.org/handbook/F_13.html" title="Time series; Decomposing time series; Mann–Kendall trend test; Sen’s slope; Pettitt’s test; Multiple imputation">
+		        Nonparametric Regression for Time Series</a></li>
+		</ul>
+		<p class="light">&nbsp;</p>
+       <ul>Permutation Tests
+&nbsp;<li><a href="http://rcompanion.org/handbook/K_01.html" title="Ordinal data; Permutation test of independence; Permutation test of symmetry">
+		         Introduction to Permutation Tests</a></li>
+		    <li><a href="http://rcompanion.org/handbook/K_02.html" title="Ordinal data; Permutation test of independence; Post-hoc analysis">
+		         One-way Permutation Test of Independence for Ordinal Data</a></li>
+		    <li><a href="http://rcompanion.org/handbook/K_03.html" title="Ordinal data; Permutation test of symmetry; Post-hoc analysis">
+		         One-way Permutation Test of Symmetry for Ordinal Data</a></li>
+		     <li><a href="http://rcompanion.org/handbook/F_15.html" title="Permutation tests for medians, percentiles, and proportions; Confidence intervals for percentiles; Post-hoc comparisons">
+		        Permutation Tests for Medians and Percentiles</a></li>
+
+
+		</ul>
+		<p class="light">&nbsp;</p>
+         <ul>Tests for Ordinal Data in Tables
+		    <li><a href="http://rcompanion.org/handbook/H_09.html" title="Linear-by-linear test; Cochran–Armitage test; Ordinal Chi-square; Ordered contingency table; Post-hoc">
+		         Association Tests for Ordinal Tables</a></li>
+		     <li><a href="http://rcompanion.org/handbook/H_11.html" title="Freeman’s theta; epsilon-squared; Somers’ D (or delta); Kendall’s tau-b; Goodman and Kruskal&#39;s gamma; Polychoric correlation">
+		         Measures of Association for Ordinal Tables</a></li>
+        </ul>
+        		<p class="light">&nbsp;</p>
+      <ul>Concepts for Linear Models
+              <li><a href="http://rcompanion.org/handbook/G_13.html" title="Linear models; General linear model; Generalized linear model; Model formulae syntax; Ordinary least squares; Maximum likelihood estimation">
+		         Introduction to Linear Models</a></li> 
+             <li><a href="http://rcompanion.org/handbook/G_03.html" title="Random variables; Random effects; Mixed models; lmer; lme4; lmerTest; nlme; lme; gls">
+		         Using Random Effects in Models</a></li> 
+             <li><a href="http://rcompanion.org/handbook/G_05.html" title="Least square means; LS means; lsmeans">
+		         What are Least Square Means?</a></li> 
+             <li><a href="http://rcompanion.org/handbook/G_06.html" title="Least square means for multiple comparisons; Post-hoc; Multiple comparisons; LS means; lsmeans">
+		         Least Square Means for Multiple Comparisons</a></li>
+             <li><a href="http://rcompanion.org/handbook/G_09.html" title="Analysis of variance; Factorial ANOVA; Main Effects; Interaction Effects; Interaction Plots; Post-hoc; Multiple comparisons; LS means">
+		         Factorial ANOVA: Main Effects, Interaction Effects, and Interaction Plots</a></li>
+             <li><a href="http://rcompanion.org/handbook/G_10.html" title="p-values and R-square values for models; pseudo r-squared; Confidence intervals for r-squared">
+		         p-values and R-square Values for Models</a></li>
+		     <li><a href="http://rcompanion.org/handbook/G_14.html" title="Minimum maximum accuracy; Mean absolute percent error; MAPE; Root mean square error; RMSE; Normalized root mean square error; NRMSE">
+		         Accuracy and Errors for Models</a></li> 
+
+		</ul>
+
+		 <p class="light">&nbsp;</p>
+         <ul>Ordinal Tests with Cumulative Link Models
+             <li><a href="http://rcompanion.org/handbook/G_01.html" title="Ordinal regression; Cumulative link models; Analysis of deviance; Model assumptions">
+		         Introduction to Cumulative Link Models (CLM) for Ordinal Data</a></li>
+             <li><a href="http://rcompanion.org/handbook/G_02.html" title="Two-sample Ordinal Test with CLM; Ordinal regression">
+		         Two-sample Ordinal Test with CLM</a></li> 
+             <li><a href="http://rcompanion.org/handbook/G_04.html" title="Two-sample Paired Ordinal Test with CLMM; Ordinal regression">
+		         Two-sample Paired Ordinal Test with CLMM</a></li> 
+             <li><a href="http://rcompanion.org/handbook/G_07.html" title="One-way Ordinal ANOVA with CLM; Ordinal regression; Post-hoc; Multiple comparisons; LS means">
+		         One-way Ordinal Regression with CLM</a></li> 
+             <li><a href="http://rcompanion.org/handbook/G_08.html" title="One-way Repeated Ordinal ANOVA with CLMM; Ordinal regression; Mixed model; Random effects; Post-hoc; Multiple comparisons; LS means">
+		         One-way Repeated Ordinal Regression with CLMM</a></li> 
+             <li><a href="http://rcompanion.org/handbook/G_11.html" title="Two-way Ordinal ANOVA with CLM; Ordinal regression; Mixed model; Random effects; Post-hoc; Multiple comparisons; LS means">
+		         Two-way Ordinal Regression with CLM</a></li> 
+             <li><a href="http://rcompanion.org/handbook/G_12.html" title="Two-way Repeated Ordinal ANOVA with CLMM; Ordinal regression; Mixed model; Random effects; Post-hoc; Multiple comparisons; LS means">
+		         Two-way Repeated Ordinal Regression with CLMM</a></li> 
+		</ul>
+		<p class="light">&nbsp;</p>
+         <ul>Tests for Nominal Data
+         	<li><a href="http://rcompanion.org/handbook/H_01.html" title="Nominal data; Descriptive statistics; Contingency tables; Bar plot; Mosaic plot; Matrix">
+		         Introduction to Tests for Nominal Variables</a></li>
+		    <li><a href="http://rcompanion.org/handbook/H_02.html" title="Confidence intervals for proportions; Binomial proportion; Multinomial proportion; Confidence intervals for a difference in proportions">
+		         Confidence Intervals for Proportions</a></li>
+            <li><a href="http://rcompanion.org/handbook/H_03.html" title="Goodness-of-Fit Tests for Nominal Variables; Exact test; G-test; Chi-square test; Multinomial test; Confidence intervals; Cramér’s V">
+		         Goodness-of-Fit Tests for Nominal Variables</a></li>
+		    <li><a href="http://rcompanion.org/handbook/H_04.html" title="Association tests for nominal variables; Fisher exact test; G-test; Chi-square test; Exercises M">
+		         Association Tests for Nominal Variables</a></li>
+		    <li><a href="http://rcompanion.org/handbook/H_10.html" title="Cramer&#39;s V; phi; Goodman Kruskal lambda">
+		         Measures of Association for Nominal Variables</a></li>
+         	<li><a href="http://rcompanion.org/handbook/H_05.html" title="Tests for paired nominal data; McNemar test; McNemar–Bowker test; Exact test; Test of symmetry; Test of marginal homogeneity; Exercises N">
+		         Tests for Paired Nominal Data</a></li>
+		    <li><a href="http://rcompanion.org/handbook/H_06.html" title="Cochran–Mantel–Haenszel test for 3-dimensional tables; Post-hoc; Multiple comparisons">
+		         Cochran–Mantel–Haenszel Test for 3-Dimensional Tables</a></li>
+         	<li><a href="http://rcompanion.org/handbook/H_07.html" title="Cochran’s Q test for paired nominal data; Post-hoc; Multiple comparisons">
+		         Cochran’s Q Test for Paired Nominal Data</a></li>
+		    <li><a href="http://rcompanion.org/handbook/H_08.html" title="Models for Nominal Data; Log-linear model; Multi-way frequency analysis; Logistic regression; Multinomial logistic; Mixed-effects logistic; Post-hoc; Multiple comparisons">
+		         Models for Nominal Data</a></li>         
+		</ul>
+		
+				<p class="light">&nbsp;</p>
+         <ul>Parametric Tests
+		    <li><a href="http://rcompanion.org/handbook/I_01.html" title="When to use parametric tests; Assumptions in parametric statistics; Formal tests for normality; Formal tests for homogeneity of variance; Count data">
+		         Introduction to Parametric Tests</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_02.html" title="One-sample t-test; Normal quantile plot; Exercises O">
+		         One-sample t-test</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_03.html" title="Two-sample t-test; Exercises P">
+		         Two-sample t-test</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_04.html" title="Paired t-test; Exercises Q">
+		         Paired t-test</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_05.html" title="Analysis of variance; One-way ANOVA; Plot of means and confidence intervals; Post-hoc; LS means; Multiple comparisons; Exercises R">
+		         One-way ANOVA</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_06.html" title="Analysis of variance; One-way ANOVA with blocks; Post-hoc; LS means; Multiple comparisons; Exercises S">
+		         One-way ANOVA with Blocks</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_07.html" title="Analysis of variance; One-way ANOVA with random blocks; Post-hoc; LS means; Multiple comparisons; Mixed-effects model; Pseudo r-squared; lme4; lmerTest; nlme">
+		         One-way ANOVA with Random Blocks</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_08.html" title="Analysis of variance; Two-way ANOVA; Interaction plot with confidence intervals; Post-hoc; LS means; Multiple comparisons; Exercises T">
+		         Two-way ANOVA</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_09.html" title="Analysis of variance; Repeated measures ANOVA; Mixed model; Interaction plot; Autocorrelation; Indicating time and subject variables; nlme">
+		         Repeated Measures ANOVA</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_10.html" title="Linear regression; Multiple correlation; Pearson Kendall Spearman correlation; Polynomial regression; Best fit line with confidence interval; xkcd; Exercises U">
+		         Correlation and Linear Regression</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_11.html" title="Robust linear regression; Linear plateau; Quadratic plateau models; Cate–Nelson">
+		         Advanced Parametric Methods</a></li>
+		    <li><a href="http://rcompanion.org/handbook/I_12.html" title="Transforming data; Log transformation; Tukey’s Ladder of Powers; Box–Cox transformation">
+		         Transforming Data</a></li>   
+		</ul>
+        		        <p class="light">&nbsp;</p>
+		       <ul>Analysis of Count Data and Percentage Data
+		    <li>
+			<a href="http://rcompanion.org/handbook/J_01.html" title="Count data; Hermite regression; Poisson regression; Negative binomial regression; Zero-inflated regression; Vuong test">
+		         Regression for Count Data</a></li>
+		    <li><a href="http://rcompanion.org/handbook/J_02.html" title="Percent data; Proportion data; Beta regression">
+		         Beta Regression for Percent and Proportion Data</a></li>      
+		</ul>
+
+        <p class="light">&nbsp;</p>
+       <ul>Other Books
+		    <li><a href="http://rcompanion.org/rcompanion/" title="Tests for nominal variables; Tests for nominal variables; Tests for one measurement variable; regressions; Multiple Tests">
+		         An R Companion for the Handbook of Biological Statistics</a></li>
+		</ul>
+
+	</div>
+	</div>
+	<!-- End Navigation -->
+	
+  <!-- Begin Rightside -->
+	<div id="rightside">
+	
+  <!-- Begin Title -->
+	<div id="title">
+		<!-- #BeginEditable "title" -->
+		<h1>Transforming Data</h1>
+		<!-- #EndEditable "title" --></div>
+	<!-- End Title -->
+
+	<div id="content">
+		<!-- #BeginEditable "content" -->
+
+<p class="MsoNormal">Transforming data is one step in addressing data that do not
+fit model assumptions, and is also used to coerce different variables to have
+similar distributions.&nbsp; Before transforming data, see the “Steps to handle
+violations of assumption” section in the <i>Assessing Model Assumptions</i>
+chapter.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<h3><a id="_Toc459550895">Transforming data</a></h3>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">Most parametric tests require that residuals be normally
+distributed and that the residuals be homoscedastic.&nbsp; </p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">One approach when residuals fail to meet these conditions is
+to transform one or more variables to better follow a normal distribution.&nbsp;
+Often, just the dependent variable in a model will need to be transformed.&nbsp;
+However, in complex models and multiple regression, it is sometimes helpful to
+transform both dependent and independent variables that deviate greatly from a
+normal distribution.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">There is nothing illicit in transforming variables, but you
+must be careful about how the results from analyses with transformed variables
+are reported.&nbsp; For example, looking at the turbidity of water across three
+locations, you might report, “Locations showed a significant difference in
+log-transformed turbidity.”&nbsp; To present means or other summary statistics, you
+might present the mean of transformed values, or back transform means to their
+original units.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">Some measurements in nature are naturally normally
+distributed.&nbsp; Other measurements are naturally log-normally distributed.&nbsp; These
+include some natural pollutants in water:&nbsp; There may be many low values with
+fewer high values and even fewer very high values.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">For right-skewed data—tail is on the right, positive skew—,
+common transformations include square root, cube root, and log.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">For left-skewed data—tail is on the left, negative skew—,
+common transformations include square root (constant – x), cube root (constant
+– x), and log (constant – x).</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">Because log (0) is undefined—as is the log of any negative
+number—, when using a log transformation, a constant should be added to all
+values to make them all positive before transformation.&nbsp; It is also sometimes
+helpful to add a constant when using other transformations.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">Another approach is to use a general power transformation,
+such as Tukey’s Ladder of Powers or a Box–Cox transformation.&nbsp; These determine
+a <i>lambda</i> value, which is used as the power coefficient to transform
+values.&nbsp; <i>X.new = X ^ lambda</i> for Tukey, and <i>X.new = (X ^ lambda </i>– <i>1)
+/ lambda </i>for Box–Cox.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The function <i>transformTukey</i> in the <i>rcompanion</i> package finds the <i>lambda</i>
+which makes a single vector of values—that is, one variable—as normally
+distributed as possible with a simple power transformation.&nbsp; </p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The Box–Cox procedure is included in the <i>MASS</i> package
+with the function <i>boxcox</i>.&nbsp; It uses a log-likelihood procedure to find
+the <i>lambda</i> to use to transform the dependent variable for a linear model
+(such as an ANOVA or linear regression).&nbsp; It can also be used on a single
+vector.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<h3><a id="_Toc459550896">Packages used in this chapter</a></h3>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The packages used in this chapter include:</p>
+
+<p class="Bullet">•&nbsp; car</p>
+
+<p class="Bullet">•&nbsp; MASS</p>
+		<p class="Bullet">•&nbsp; rcompanion</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The following commands will install these packages if they
+are not already installed:</p>
+
+<p class="c1"><br>
+if(!require(psych)){install.packages("car")}<br>
+if(!require(MASS)){install.packages("MASS")}<br>
+if(!require(rcompanion)){install.packages("rcompanion")}<br>
+<br>
+</p>
+
+<h3><a id="_Toc459550897">Example of transforming skewed data</a></h3>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">This example uses hypothetical data of river water
+turbidity.&nbsp; Turbidity is a measure of how cloudy water is due to suspended
+material in the water.&nbsp; Water quality parameters such as this are often
+naturally log-normally distributed:&nbsp; values are often low, but are occasionally
+high or very high.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The first plot is a histogram of the <i>Turbidity</i>
+values, with a normal curve superimposed.&nbsp; Looking at the gray bars, this data
+is skewed strongly to the right (positive skew), and looks more or less
+log-normal.&nbsp; The gray bars deviate noticeably from the red normal curve.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The second plot is a normal quantile plot (normal Q–Q
+plot).&nbsp; If the data were normally distributed, the points would follow the red
+line fairly closely.&nbsp; </p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="c1">Turbidity = c(1.0, 1.2, 1.1, 1.1, 2.4, 2.2, 2.6, 4.1, 5.0, 10.0,
+4.0, 4.1, 4.2, 4.1, 5.1, 4.5, 5.0, 15.2, 10.0, 20.0, 1.1, 1.1, 1.2, 1.6, 2.2,
+3.0, 4.0, 10.5)<br>
+<br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(Turbidity)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="274" id="Picture 211" src="./R Handbook_ Transforming Data_files/image158.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">qqnorm(Turbidity,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="Sample Quantiles for Turbidity")<br>
+qqline(Turbidity, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col="red")</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 39" src="./R Handbook_ Transforming Data_files/image159.png"><br>
+<br>
+<br>
+</p>
+
+<h4><a id="_Toc459550898">Square root transformation</a></h4>
+
+<p class="MsoNormal">Since the data is right-skewed, we will apply common
+transformations for right-skewed data:&nbsp; square root, cube root, and log.&nbsp; The
+square root transformation improves the distribution of the data somewhat.</p>
+
+<p class="c1"><br>
+T_sqrt = sqrt(Turbidity)<br>
+<br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(T_sqrt)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 213" src="./R Handbook_ Transforming Data_files/image160.png"><br>
+<br>
+<br>
+</p>
+
+<h4><a id="_Toc459550899">Cube root transformation</a></h4>
+
+<p class="MsoNormal">The cube root transformation is stronger than the square
+root transformation.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="c1">T_cub = sign(Turbidity) * abs(Turbidity)^(1/3)&nbsp; &nbsp;<span style="color:#006600"># Avoid complex numbers</span> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:#006600">#&nbsp;&nbsp;
+for some cube roots</span><br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(T_cub)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 214" src="./R Handbook_ Transforming Data_files/image161.png"><br>
+<br>
+<br>
+</p>
+
+<h4><a id="_Toc459550900">Log transformation</a></h4>
+
+<p class="MsoNormal">The log transformation is a relatively strong
+transformation.&nbsp; Because certain measurements in nature are naturally
+log-normal, it is often a successful transformation for certain data sets.&nbsp;
+While the transformed data here does not follow a normal distribution very
+well, it is probably about as close as we can get with these particular data.</p>
+
+<p class="c1"><br>
+T_log = log(Turbidity)<br>
+<br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(T_log)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 216" src="./R Handbook_ Transforming Data_files/image162.png"><br>
+<br>
+<br>
+</p>
+
+<h3><a id="_Toc459550901">Tukey’s Ladder of Powers transformation</a></h3>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The approach of Tukey’s Ladder of Powers uses a power
+transformation on a data set.&nbsp; For example, raising data to a 0.5 power is
+equivalent to applying a square root transformation; raising data to a 0.33
+power is equivalent to applying a cube root transformation.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">Here, I use the <i>transformTukey</i> function, which
+performs iterative Shapiro–Wilk tests, and finds the <i>lambda</i> value that
+maximizes the W statistic from those tests.&nbsp; In essence, this finds the power
+transformation that makes the data fit the normal distribution as closely as
+possible with this type of transformation.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">Left skewed values should be adjusted with (constant –
+value), to convert the skew to right skewed, and perhaps making all values
+positive.&nbsp; In some cases of right skewed data, it may be beneficial to add a
+constant to make all data values positive before transformation.&nbsp; For large
+values, it may be helpful to scale values to a more reasonable range.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">In this example, the resultant <i>lambda</i> of –0.1 is
+slightly stronger than a log transformation, since a log transformation
+corresponds to a <i>lambda</i> of 0.</p>
+
+<p class="c1"><br>
+library(rcompanion)<br>
+<br>
+T_tuk = <br>
+&nbsp;&nbsp;&nbsp;&nbsp; transformTukey(Turbidity,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; plotit=FALSE)<br>
+<br>
+</p>
+
+<p class="c2">&nbsp;&nbsp;&nbsp; lambda&nbsp;&nbsp;&nbsp;&nbsp; W Shapiro.p.value<br>
+397&nbsp;&nbsp; -0.1 0.935&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.08248<br>
+<br>
+if (lambda &gt;&nbsp; 0){TRANS = x ^ lambda} <br>
+if (lambda == 0){TRANS = log(x)} <br>
+if (lambda &lt;&nbsp; 0){TRANS = -1 * x ^ lambda} <br>
+<br>
+<br>
+</p>
+
+<p class="c1">library(rcompanion)<br>
+<br>
+plotNormalHistogram(T_tuk)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 218" src="./R Handbook_ Transforming Data_files/image163.png"><br>
+<br>
+<br>
+</p>
+
+<h4><a id="_Toc459550902">Example of Tukey-transformed data in ANOVA</a></h4>
+
+<p class="MsoNormal">For an example of how transforming data can improve the distribution
+of the residuals of a parametric analysis, we will use the same turbidity values,
+but assign them to three different locations.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">Transforming the turbidity values to be more normally
+distributed, both improves the distribution of the residuals of the analysis
+and makes a more powerful test, lowering the <i>p</i>-value.</p>
+
+<p class="c1"><br>
+Input =("<br>
+Location Turbidity<br>
+&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;1.0<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;1.2<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;1.1<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;1.1<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;2.4<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;2.2<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;2.6<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;4.1<br>
+&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;5.0<br>
+&nbsp;a&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.0<br>
+&nbsp;b&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.0<br>
+&nbsp;b&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;4.1<br>
+&nbsp;b&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2<br>
+&nbsp;b&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1<br>
+&nbsp;b&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;5.1<br>
+&nbsp;b&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.5<br>
+&nbsp;b &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.0<br>
+&nbsp;b&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;15.2<br>
+&nbsp;b&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;10.0<br>
+&nbsp;b&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;20.0<br>
+&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;1.1<br>
+&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;1.1<br>
+&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;1.2<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;1.6<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;2.2<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;3.0<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;4.0<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;10.5<br>
+")<br>
+<br>
+Data = read.table(textConnection(Input),header=TRUE)<br>
+<br>
+<br>
+</p>
+
+<h5>Attempt ANOVA on un-transformed data</h5>
+
+<p class="MsoNormal">Here, even though the analysis of variance results in a
+significant <i>p</i>-value (<i>p</i> = 0.03), the residuals deviate from the
+normal distribution enough to make the analysis invalid.&nbsp; The plot of the
+residuals vs. the fitted values shows that the residuals are somewhat
+heteroscedastic, though not terribly so.</p>
+
+<p class="c1"><br>
+boxplot(Turbidity ~ Location,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;data = Data,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ylab="Turbidity",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;xlab="Location")<br>
+<br>
+<br>
+model = lm(Turbidity ~ Location, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;data=Data)<br>
+<br>
+library(car)<br>
+<br>
+Anova(model, type="II")<br>
+<br>
+</p>
+
+<p class="c2">Anova Table (Type II tests)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sum Sq Df F value&nbsp; Pr(&gt;F)&nbsp; <br>
+Location&nbsp; 132.63&nbsp; 2&nbsp; 3.8651 0.03447 *<br>
+Residuals 428.95 25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+<br>
+<br>
+</p>
+
+<p class="c1">x = (residuals(model))<br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(x)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 219" src="./R Handbook_ Transforming Data_files/image164.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">qqnorm(residuals(model),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="Sample Quantiles for residuals")<br>
+qqline(residuals(model), <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col="red")</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 45" src="./R Handbook_ Transforming Data_files/image165.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">plot(fitted(model),<br>
+&nbsp;&nbsp;&nbsp;&nbsp; residuals(model))</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 59" src="./R Handbook_ Transforming Data_files/image166.png"><br>
+<br>
+<br>
+</p>
+
+<h5>Transform data</h5>
+
+<p class="c1"><br>
+library(rcompanion)<br>
+<br>
+Data$Turbidity_tuk = <br>
+&nbsp;&nbsp;&nbsp;&nbsp; transformTukey(Data$Turbidity,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; plotit=FALSE)</p>
+
+<p class="c2"><br>
+&nbsp;&nbsp;&nbsp; lambda&nbsp;&nbsp;&nbsp;&nbsp; W Shapiro.p.value<br>
+397&nbsp;&nbsp; -0.1 0.935&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;0.08248<br>
+<br>
+if (lambda &gt;&nbsp; 0){TRANS = x ^ lambda} <br>
+if (lambda == 0){TRANS = log(x)} <br>
+if (lambda &lt;&nbsp; 0){TRANS = -1 * x ^ lambda}<br>
+<br>
+<br>
+</p>
+
+<h5>ANOVA with Tukey-transformed data</h5>
+
+<p class="MsoNormal">After transformation, the residuals from the ANOVA are
+closer to a normal distribution—although not perfectly—, making the <i>F</i>-test
+more appropriate.&nbsp; In addition, the test is more powerful as indicated by the
+lower <i>p</i>-value (<i>p</i> = 0.005) than with the untransformed data.&nbsp; The
+plot of the residuals vs. the fitted values shows that the residuals are about
+as heteroscedastic as they were with the untransformed data.</p>
+
+<p class="c1"><br>
+boxplot(Turbidity_tuk ~ Location,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;data = Data,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ylab="Tukey-transformed Turbidity",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;xlab="Location")</p>
+
+<p class="c2"><br>
+<img alt="image" width="500" height="auto" id="Picture 46" src="./R Handbook_ Transforming Data_files/image167.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">model = lm(Turbidity_tuk ~ Location, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;data=Data)<br>
+<br>
+library(car)<br>
+<br>
+Anova(model, type="II")</p>
+
+<p class="c2"><br>
+Anova Table (Type II tests)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sum Sq Df F value&nbsp;&nbsp; Pr(&gt;F)&nbsp;&nbsp; <br>
+Location&nbsp; 0.052506&nbsp; 2&nbsp; 6.6018 0.004988 **<br>
+Residuals 0.099416 25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+<br>
+<br>
+</p>
+
+<p class="c1">x = residuals(model)<br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(x)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 220" src="./R Handbook_ Transforming Data_files/image168.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">qqnorm(residuals(model),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="Sample Quantiles for residuals")<br>
+qqline(residuals(model), <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col="red")</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 48" src="./R Handbook_ Transforming Data_files/image169.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">plot(fitted(model),<br>
+&nbsp;&nbsp;&nbsp;&nbsp; residuals(model))</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 58" src="./R Handbook_ Transforming Data_files/image170.png"><br>
+<br>
+<br>
+</p>
+
+<h3><a id="_Toc459550903">Box–Cox transformation</a></h3>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The Box–Cox procedure is similar in concept to the Tukey Ladder
+of Power procedure described above.&nbsp; However, instead of transforming a single
+variable, it maximizes a log-likelihood statistic for a linear model (such as
+ANOVA or linear regression).&nbsp; It will also work on a single variable using a
+formula of <i>x ~ 1</i>.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The Box–Cox procedure is available with the <i>boxcox </i>function
+in the <i>MASS</i> package.&nbsp; However, a few steps are needed to extract the <i>lambda</i>
+value and transform the data set.</p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">This example uses the same turbidity data.</p>
+
+<p class="c1"><br>
+Turbidity = c(1.0, 1.2, 1.1, 1.1, 2.4, 2.2, 2.6, 4.1, 5.0, 10.0, 4.0, 4.1, 4.2,
+4.1, 5.1, 4.5, 5.0, 15.2, 10.0, 20.0, 1.1, 1.1, 1.2, 1.6, 2.2, 3.0, 4.0, 10.5)<br>
+<br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(Turbidity)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 221" src="./R Handbook_ Transforming Data_files/image171.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">qqnorm(Turbidity,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="Sample Quantiles for Turbidity")<br>
+qqline(Turbidity, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col="red")</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 50" src="./R Handbook_ Transforming Data_files/image159.png"><br>
+<br>
+<br>
+</p>
+
+<h4><a id="_Toc459550904">Box–Cox transformation for a single variable</a></h4>
+
+<p class="c1"><br>
+library(MASS)<br>
+<br>
+Box = boxcox(Turbidity ~ 1,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:#006600"># Transform
+Turbidity as a single vector</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lambda = seq(-6,6,0.1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:#006600"># Try
+values -6 to 6 by 0.1</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )<br>
+<br>
+Cox = data.frame(Box$x, Box$y)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:#006600"># Create
+a data frame with the results</span><br>
+<br>
+Cox2 = Cox[with(Cox, order(-Cox$Box.y)),] <span style="color:#006600"># Order the
+new data frame by decreasing y</span><br>
+<br>
+Cox2[1,]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:#006600"># Display
+the lambda with the greatest<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #&nbsp;&nbsp;&nbsp; log likelihood</span></p>
+
+<p class="c2"><br>
+&nbsp;&nbsp; Box.x&nbsp;&nbsp;&nbsp;&nbsp; Box.y<br>
+59&nbsp; -0.2 -41.35829<br>
+<br>
+<br>
+</p>
+
+<p class="c1">lambda = Cox2[1, "Box.x"]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:#006600"># Extract that lambda</span><br>
+<br>
+T_box = (Turbidity ^ lambda - 1)/lambda&nbsp; &nbsp;<span style="color:#006600"># Transform
+the original data</span><br>
+<br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(T_box)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 222" src="./R Handbook_ Transforming Data_files/image172.png"><br>
+<br>
+<br>
+</p>
+
+<h4><a id="_Toc459550905">Example of Box–Cox transformation for ANOVA model</a></h4>
+
+<p class="c1"><br>
+Input =("<br>
+Location Turbidity<br>
+&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;1.0<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;1.2<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;1.1<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;1.1<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;2.4<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;2.2<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;2.6<br>
+&nbsp;a&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;4.1<br>
+&nbsp;a&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;5.0<br>
+&nbsp;a&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10.0<br>
+&nbsp;b&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.0<br>
+&nbsp;b&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;4.1<br>
+&nbsp;b&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2<br>
+&nbsp;b&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1<br>
+&nbsp;b&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;5.1<br>
+&nbsp;b&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.5<br>
+&nbsp;b &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.0<br>
+&nbsp;b&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;15.2<br>
+&nbsp;b&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;10.0<br>
+&nbsp;b&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;20.0<br>
+&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;1.1<br>
+&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;1.1<br>
+&nbsp;c&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;1.2<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;1.6<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;2.2<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;3.0<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;4.0<br>
+&nbsp;c&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;10.5<br>
+")<br>
+<br>
+Data = read.table(textConnection(Input),header=TRUE)<br>
+<br>
+</p>
+
+<h5>Attempt ANOVA on un-transformed data</h5>
+
+<p class="c1"><br>
+model = lm(Turbidity ~ Location, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;data=Data)<br>
+<br>
+library(car)<br>
+<br>
+Anova(model, type="II")</p>
+
+<p class="c2"><br>
+Anova Table (Type II tests)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sum Sq Df F value&nbsp; Pr(&gt;F)&nbsp; <br>
+Location&nbsp; 132.63&nbsp; 2&nbsp; 3.8651 0.03447 *<br>
+Residuals 428.95 25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+<br>
+<br>
+</p>
+
+<p class="c1">x = residuals(model)<br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(x)</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 223" src="./R Handbook_ Transforming Data_files/image173.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">qqnorm(residuals(model),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="Sample Quantiles for residuals")<br>
+qqline(residuals(model), <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col="red")</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 53" src="./R Handbook_ Transforming Data_files/image165.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">plot(fitted(model),<br>
+&nbsp;&nbsp;&nbsp;&nbsp; residuals(model))</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 60" src="./R Handbook_ Transforming Data_files/image166.png"><br>
+<br>
+<br>
+</p>
+
+<h5>Transform data</h5>
+
+<p class="c1"><br>
+library(MASS)<br>
+<br>
+Box = boxcox(Turbidity ~ Location,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data = Data,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lambda = seq(-6,6,0.1)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; )<br>
+<br>
+Cox = data.frame(Box$x, Box$y)<br>
+<br>
+Cox2 = Cox[with(Cox, order(-Cox$Box.y)),]<br>
+<br>
+Cox2[1,]<br>
+<br>
+lambda = Cox2[1, "Box.x"]<br>
+<br>
+Data$Turbidity_box = (Data$Turbidity ^ lambda - 1)/lambda&nbsp;&nbsp; <br>
+<br>
+boxplot(Turbidity_box ~ Location,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;data = Data,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;ylab="Box–Cox-transformed Turbidity",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;xlab="Location")</p>
+
+<p class="c2"><br>
+<img alt="image" width="500" height="auto" id="Picture 62" src="./R Handbook_ Transforming Data_files/image174.png"><br>
+<br>
+<br>
+</p>
+
+<h5>Perform ANOVA and check residuals</h5>
+
+<p class="c1"><br>
+model = lm(Turbidity_box ~ Location, <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;data=Data)<br>
+<br>
+library(car)<br>
+<br>
+Anova(model, type="II")</p>
+
+<p class="c2"><br>
+Anova Table (Type II tests)<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sum Sq Df F value Pr(&gt;F)&nbsp;&nbsp; <br>
+Location&nbsp; 0.16657&nbsp; 2&nbsp; 6.6929 0.0047 **<br>
+Residuals 0.31110 25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+<br>
+<br>
+</p>
+
+<p class="c1">x = residuals(model)<br>
+<br>
+library(rcompanion)<br>
+<br>
+plotNormalHistogram(x)</p>
+
+<p class="c1"><br>
+<img alt="image" width="400" height="auto" id="Picture 224" src="./R Handbook_ Transforming Data_files/image175.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">qqnorm(residuals(model),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="Sample Quantiles for residuals")<br>
+qqline(residuals(model), <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col="red")</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 63" src="./R Handbook_ Transforming Data_files/image176.png"><br>
+<br>
+<br>
+</p>
+
+<p class="c1">plot(fitted(model),<br>
+&nbsp;&nbsp;&nbsp;&nbsp; residuals(model))</p>
+
+<p class="c2"><br>
+<img alt="image" width="400" height="auto" id="Picture 64" src="./R Handbook_ Transforming Data_files/image177.png"><br>
+<br>
+<br>
+</p>
+
+<h3><a id="_Toc459550906">Conclusions</a></h3>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">Both the Tukey’s Ladder of Powers principle as implemented
+by the <i>transformTukey</i> function and the Box–Cox procedure were successful
+at transforming a single variable to follow a more normal distribution.&nbsp; They
+were also both successful at improving the distribution of residuals from a
+simple ANOVA. </p>
+
+<p class="MsoNormal">&nbsp;</p>
+
+<p class="MsoNormal">The Box–Cox procedure has the advantage of dealing with the
+dependent variable of a linear model, while the <i>transformTukey</i> function
+works only for a single variable without considering other variables.&nbsp; Because
+of this, the Box–Cox procedure may be advantageous when a relatively simple
+model is considered.&nbsp; In cases where there are complex models or multiple
+regression, it may be helpful to transform both dependent and independent
+variables independently.</p>
+
+		<!-- #EndEditable "content" --></div>
+	<!-- End Content -->
+		 
+	<!-- Begin Footer -->
+	<div id="footer">
+		<p class="foot">©2016 by Salvatore S. Mangiafico. <br>Rutgers 
+		Cooperative Extension, New Brunswick, NJ.</p>
+		<p class="foot">Non-commercial reproduction of this content, with 
+		attribution, is permitted.<br>For-profit reproduction without permission 
+		is prohibited.-commercial reproduction of this content, with 
+		attribution, is permitted. &nbsp;</p>
+		<p class="foot">If you use the code or information in this site in 
+		a published work, please cite it as a source. &nbsp;Also, if you are an instructor and use this book in your course, please let me know. &nbsp;
+		My contact information is on the <i>
+		<a href="http://rcompanion.org/handbook/A_02.html">About the Author of 
+		this Book</a></i> page.</p>
+		<p class="foot">Mangiafico, S.S. 2016. Summary and Analysis of Extension 
+		Program Evaluation in R, version 1.13.6
+		<a href="http://rcompanion.org/handbook/">rcompanion.org/handbook/</a>. 
+		(Pdf version:
+		<a href="http://rcompanion.org/documents/RHandbookProgramEvaluation.pdf">
+		rcompanion.org/documents/RHandbookProgramEvaluation.pdf</a>.) </p>
+
+		
+	</div>
+	<!-- End Footer --></div>
+	<!-- End Rightside --></div>
+<!-- End Container -->
+
+
+
+<!-- #EndTemplate -->
+
+
+<audio controls="controls" style="display: none;"></audio><table cellspacing="0" cellpadding="0" class="gstl_50 gssb_c" style="width: 246px; display: none; top: 322px; position: absolute; left: 27px;"><tbody><tr><td class="gssb_f"></td><td class="gssb_e" style="width: 100%;"></td></tr></tbody></table></body><style type="text/css">#yddContainer{display:block;font-family:Microsoft YaHei;position:relative;width:100%;height:100%;top:-4px;left:-4px;font-size:12px;border:1px solid}#yddTop{display:block;height:22px}#yddTopBorderlr{display:block;position:static;height:17px;padding:2px 28px;line-height:17px;font-size:12px;color:#5079bb;font-weight:bold;border-style:none solid;border-width:1px}#yddTopBorderlr .ydd-sp{position:absolute;top:2px;height:0;overflow:hidden}.ydd-icon{left:5px;width:17px;padding:0px 0px 0px 0px;padding-top:17px;background-position:-16px -44px}.ydd-close{right:5px;width:16px;padding-top:16px;background-position:left -44px}#yddKeyTitle{float:left;text-decoration:none}#yddMiddle{display:block;margin-bottom:10px}.ydd-tabs{display:block;margin:5px 0;padding:0 5px;height:18px;border-bottom:1px solid}.ydd-tab{display:block;float:left;height:18px;margin:0 5px -1px 0;padding:0 4px;line-height:18px;border:1px solid;border-bottom:none}.ydd-trans-container{display:block;line-height:160%}.ydd-trans-container a{text-decoration:none;}#yddBottom{position:absolute;bottom:0;left:0;width:100%;height:22px;line-height:22px;overflow:hidden;background-position:left -22px}.ydd-padding010{padding:0 10px}#yddWrapper{color:#252525;z-index:10001;background:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ab20.png);}#yddContainer{background:#fff;border-color:#4b7598}#yddTopBorderlr{border-color:#f0f8fc}#yddWrapper .ydd-sp{background-image:url(chrome-extension://eopjamdnofihpioajgfdikhhbobonhbb/ydd-sprite.png)}#yddWrapper a,#yddWrapper a:hover,#yddWrapper a:visited{color:#50799b}#yddWrapper .ydd-tabs{color:#959595}.ydd-tabs,.ydd-tab{background:#fff;border-color:#d5e7f3}#yddBottom{color:#363636}#yddWrapper{min-width:250px;max-width:400px;}</style></html>
